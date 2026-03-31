@@ -10,7 +10,10 @@ import {
   Calendar,
   Eye,
   History,
-  FileEdit
+  FileEdit,
+  ChevronDown,
+  Search,
+  X
 } from 'lucide-react';
 
 interface GuiaData {
@@ -24,9 +27,70 @@ interface GuiaData {
   responsavel: string;
 }
 
+const LISTA_DESTINOS = [
+  "CF ALICE DE JESUS REGO",
+  "CF DEOLINDO COUTO",
+  "CF EDSON ABDALLA SAAD",
+  "CF ERNANI DE PAIVA FERREIRA BRAGA",
+  "CF HELANDE DE MELLO GONÇALVES",
+  "CF ILZO MOTTA DE MELLO",
+  "CF JAMIL HADDAD",
+  "CF JOÃO BATISTA CHAGAS",
+  "CF JOSÉ ANTÔNIO CIRAUDO",
+  "CF LENICE MARIA MONTEIRO COELHO",
+  "CF LOURENÇO DE MELLO",
+  "CF SAMUEL PENHA VALLE",
+  "CF SÉRGIO AROUCA",
+  "CF VALÉRIA GOMES ESTEVES",
+  "CF WALDEMAR BERARDINELLI",
+  "CMS ADELINO SIMÕES",
+  "CMS ALOYSIO AMÂNCIO DA SILVA",
+  "CMS CATTAPRETA",
+  "CMS CESÁRIO DE MELO",
+  "CMS CYRO DE MELLO",
+  "CMS DÉCIO AMARAL FILHO",
+  "CMS EMYDIO CABRAL",
+  "CMS FLORIPES GALDINO PEREIRA",
+  "CMS MARIA APARECIDA DE ALMEIDA",
+  "CMS SÁVIO ANTUNES",
+  "FORA DE ÁREA",
+  "SMS POLICLÍNICA LINCOLN DE FREITAS FILHO",
+  "CAPS SIMÃO BACAMARTE",
+  "CAPSAD II JÚLIO CÉSAR DE CARVALHO",
+  "CAPSI SANTA CRUZ",
+  "CAPSI II MAFALDA",
+  "HOSPITAL MUNICIPAL PEDRO SEGUNDO",
+  "SMS UPA 24H JOÃO XXIII",
+  "SMS UPA 24H PACIÊNCIA",
+  "SMS UPA 24H SEPETIBA",
+  "SES RJ UPA 24H SANTA CRUZ",
+  "CONSELHO TUTELAR",
+  "10ª CRE",
+  "10ª CAS",
+  "DEAMBULATÓRIO SEPETIVA"
+];
+
+const LISTA_ORIGENS = [
+  "S/SUBPAV/CAP-5.3/DAPS"
+];
+
+const LISTA_SETORES = [
+  "DIREÇÃO",
+  "ADMINISTRAÇÃO"
+];
+
 export default function App() {
   const [activeTab, setActiveTab] = useState<'nova' | 'historico'>('nova');
   const [historico, setHistorico] = useState<GuiaData[]>([]);
+  const [isCustomDestino, setIsCustomDestino] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isCustomOrigem, setIsCustomOrigem] = useState(false);
+  const [isDropdownOrigemOpen, setIsDropdownOrigemOpen] = useState(false);
+  const [isCustomSetor, setIsCustomSetor] = useState(false);
+  const [isDropdownSetorOpen, setIsDropdownSetorOpen] = useState(false);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTermOrigem, setSearchTermOrigem] = useState('');
+  const [searchTermSetor, setSearchTermSetor] = useState('');
   const [formData, setFormData] = useState({
     origem: '',
     destino: '',
@@ -42,6 +106,9 @@ export default function App() {
   };
 
   const handleClear = () => {
+    setIsCustomDestino(false);
+    setIsCustomOrigem(false);
+    setIsCustomSetor(false);
     setFormData({
       origem: '',
       destino: '',
@@ -68,6 +135,18 @@ export default function App() {
     }
   };
 
+  const filteredDestinos = LISTA_DESTINOS.filter(d => 
+    d.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const filteredOrigens = LISTA_ORIGENS.filter(o => 
+    o.toLowerCase().includes(searchTermOrigem.toLowerCase())
+  );
+
+  const filteredSetores = LISTA_SETORES.filter(s => 
+    s.toLowerCase().includes(searchTermSetor.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen bg-[#f8f9fa] font-sans text-slate-900 flex flex-col print:bg-white">
       <style>
@@ -85,6 +164,32 @@ export default function App() {
               height: 100vh;
               overflow: hidden;
             }
+            .custom-scrollbar::-webkit-scrollbar {
+              width: 6px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-track {
+              background: transparent;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+              background: #e2e8f0;
+              border-radius: 10px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+              background: #cbd5e1;
+            }
+          }
+          .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+          }
+          .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+          }
+          .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
           }
         `}
       </style>
@@ -131,37 +236,328 @@ export default function App() {
                   <section className="bg-white p-5 sm:p-8 rounded-xl shadow-sm border border-slate-100">
                     <h3 className="uppercase tracking-widest text-[10px] font-bold text-slate-500 mb-6">Logística de Origem e Destino</h3>
                     <div className="grid grid-cols-1 gap-6">
-                      <div>
+                      <div className="relative">
                         <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">De (Origem)</label>
-                        <input 
-                          name="origem"
-                          value={formData.origem}
-                          onChange={handleChange}
-                          className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none" 
-                          type="text" 
-                        />
+                        {!isCustomOrigem ? (
+                          <div className="relative">
+                            <button
+                              type="button"
+                              onClick={() => setIsDropdownOrigemOpen(!isDropdownOrigemOpen)}
+                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none flex items-center justify-between group hover:bg-slate-200/50"
+                            >
+                              <span className={formData.origem ? 'text-[#00254b]' : 'text-slate-400'}>
+                                {formData.origem || "Selecione uma origem..."}
+                              </span>
+                              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${isDropdownOrigemOpen ? 'rotate-180' : ''}`} />
+                            </button>
+
+                            {isDropdownOrigemOpen && (
+                              <>
+                                <div 
+                                  className="fixed inset-0 z-50" 
+                                  onClick={() => setIsDropdownOrigemOpen(false)}
+                                />
+                                <div className="absolute z-[60] left-0 right-0 mt-2 bg-white rounded-xl shadow-[0_20px_50px_rgba(0,37,75,0.15)] border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                                  {/* Search Area */}
+                                  <div className="p-3 border-b border-slate-50 flex items-center gap-2 bg-slate-50/50">
+                                    <Search className="w-4 h-4 text-slate-400" />
+                                    <input
+                                      type="text"
+                                      autoFocus
+                                      placeholder="Buscar origem..."
+                                      value={searchTermOrigem}
+                                      onChange={(e) => setSearchTermOrigem(e.target.value)}
+                                      className="w-full bg-transparent border-none focus:ring-0 text-sm text-[#00254b] outline-none"
+                                    />
+                                    {searchTermOrigem && (
+                                      <button onClick={() => setSearchTermOrigem('')} className="p-1 hover:bg-slate-200 rounded-full transition-colors">
+                                        <X className="w-3 h-3 text-slate-400" />
+                                      </button>
+                                    )}
+                                  </div>
+
+                                  {/* Options List */}
+                                  <div className="max-h-60 overflow-y-auto custom-scrollbar">
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setIsCustomOrigem(true);
+                                        setIsDropdownOrigemOpen(false);
+                                        setFormData(prev => ({ ...prev, origem: '' }));
+                                      }}
+                                      className="w-full text-left px-4 py-3 text-sm font-bold text-[#00254b] hover:bg-blue-50 transition-colors flex items-center gap-2 border-b border-slate-50"
+                                    >
+                                      <span className="text-lg">✎</span> Digitar origem personalizada...
+                                    </button>
+                                    
+                                    {filteredOrigens.length > 0 ? (
+                                      filteredOrigens.map((origem) => (
+                                        <button
+                                          key={origem}
+                                          type="button"
+                                          onClick={() => {
+                                            setFormData(prev => ({ ...prev, origem }));
+                                            setIsDropdownOrigemOpen(false);
+                                            setSearchTermOrigem('');
+                                          }}
+                                          className={`w-full text-left px-4 py-3 text-sm transition-colors flex items-center gap-2 ${
+                                            formData.origem === origem 
+                                              ? 'bg-blue-50 text-[#00254b] font-bold' 
+                                              : 'text-slate-600 hover:bg-slate-50'
+                                          }`}
+                                        >
+                                          {origem}
+                                        </button>
+                                      ))
+                                    ) : (
+                                      <div className="px-4 py-8 text-center text-slate-400 text-xs">
+                                        Nenhuma origem encontrada para "{searchTermOrigem}"
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="relative">
+                            <input 
+                              name="origem"
+                              value={formData.origem}
+                              onChange={handleChange}
+                              placeholder="Digite a origem livremente..."
+                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none" 
+                              type="text" 
+                              autoFocus
+                            />
+                            <button 
+                              onClick={() => {
+                                setIsCustomOrigem(false);
+                                setFormData(prev => ({ ...prev, origem: '' }));
+                              }}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] uppercase font-bold text-slate-400 hover:text-[#00254b] transition-colors p-2 bg-white/80 rounded-md shadow-sm"
+                              title="Voltar para lista"
+                            >
+                              Voltar
+                            </button>
+                          </div>
+                        )}
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                          <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">Para (Destino)</label>
-                          <input 
-                            name="destino"
-                            value={formData.destino}
-                            onChange={handleChange}
-                            className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none" 
-                            type="text" 
-                          />
-                        </div>
-                        <div>
-                          <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">Setor do Destino</label>
-                          <input 
-                            name="setorDestino"
-                            value={formData.setorDestino}
-                            onChange={handleChange}
-                            className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none" 
-                            type="text" 
-                          />
-                        </div>
+                      <div className="relative">
+                        <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">Para (Destino)</label>
+                        {!isCustomDestino ? (
+                          <div className="relative">
+                            <button
+                              type="button"
+                              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none flex items-center justify-between group hover:bg-slate-200/50"
+                            >
+                              <span className={formData.destino ? 'text-[#00254b]' : 'text-slate-400'}>
+                                {formData.destino || "Selecione um destino..."}
+                              </span>
+                              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                            </button>
+
+                            {isDropdownOpen && (
+                              <>
+                                <div 
+                                  className="fixed inset-0 z-50" 
+                                  onClick={() => setIsDropdownOpen(false)}
+                                />
+                                <div className="absolute z-[60] left-0 right-0 mt-2 bg-white rounded-xl shadow-[0_20px_50px_rgba(0,37,75,0.15)] border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                                  {/* Search Area */}
+                                  <div className="p-3 border-b border-slate-50 flex items-center gap-2 bg-slate-50/50">
+                                    <Search className="w-4 h-4 text-slate-400" />
+                                    <input
+                                      type="text"
+                                      autoFocus
+                                      placeholder="Buscar destino..."
+                                      value={searchTerm}
+                                      onChange={(e) => setSearchTerm(e.target.value)}
+                                      className="w-full bg-transparent border-none focus:ring-0 text-sm text-[#00254b] outline-none"
+                                    />
+                                    {searchTerm && (
+                                      <button onClick={() => setSearchTerm('')} className="p-1 hover:bg-slate-200 rounded-full transition-colors">
+                                        <X className="w-3 h-3 text-slate-400" />
+                                      </button>
+                                    )}
+                                  </div>
+
+                                  {/* Options List */}
+                                  <div className="max-h-60 overflow-y-auto custom-scrollbar">
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setIsCustomDestino(true);
+                                        setIsDropdownOpen(false);
+                                        setFormData(prev => ({ ...prev, destino: '' }));
+                                      }}
+                                      className="w-full text-left px-4 py-3 text-sm font-bold text-[#00254b] hover:bg-blue-50 transition-colors flex items-center gap-2 border-b border-slate-50"
+                                    >
+                                      <span className="text-lg">✎</span> Digitar destino personalizado...
+                                    </button>
+                                    
+                                    {filteredDestinos.length > 0 ? (
+                                      filteredDestinos.map((destino) => (
+                                        <button
+                                          key={destino}
+                                          type="button"
+                                          onClick={() => {
+                                            setFormData(prev => ({ ...prev, destino }));
+                                            setIsDropdownOpen(false);
+                                            setSearchTerm('');
+                                          }}
+                                          className={`w-full text-left px-4 py-3 text-sm transition-colors flex items-center gap-2 ${
+                                            formData.destino === destino 
+                                              ? 'bg-blue-50 text-[#00254b] font-bold' 
+                                              : 'text-slate-600 hover:bg-slate-50'
+                                          }`}
+                                        >
+                                          {destino}
+                                        </button>
+                                      ))
+                                    ) : (
+                                      <div className="px-4 py-8 text-center text-slate-400 text-xs">
+                                        Nenhum destino encontrado para "{searchTerm}"
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="relative">
+                            <input 
+                              name="destino"
+                              value={formData.destino}
+                              onChange={handleChange}
+                              placeholder="Digite o destino livremente..."
+                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none" 
+                              type="text" 
+                              autoFocus
+                            />
+                            <button 
+                              onClick={() => {
+                                setIsCustomDestino(false);
+                                setFormData(prev => ({ ...prev, destino: '' }));
+                              }}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] uppercase font-bold text-slate-400 hover:text-[#00254b] transition-colors p-2 bg-white/80 rounded-md shadow-sm"
+                              title="Voltar para lista"
+                            >
+                              Voltar
+                            </button>
+                          </div>
+                        )}
+                      </div>
+                      <div className="relative">
+                        <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">Setor do Destino</label>
+                        {!isCustomSetor ? (
+                          <div className="relative">
+                            <button
+                              type="button"
+                              onClick={() => setIsDropdownSetorOpen(!isDropdownSetorOpen)}
+                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none flex items-center justify-between group hover:bg-slate-200/50"
+                            >
+                              <span className={formData.setorDestino ? 'text-[#00254b]' : 'text-slate-400'}>
+                                {formData.setorDestino || "Selecione um setor..."}
+                              </span>
+                              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${isDropdownSetorOpen ? 'rotate-180' : ''}`} />
+                            </button>
+
+                            {isDropdownSetorOpen && (
+                              <>
+                                <div 
+                                  className="fixed inset-0 z-50" 
+                                  onClick={() => setIsDropdownSetorOpen(false)}
+                                />
+                                <div className="absolute z-[60] left-0 right-0 mt-2 bg-white rounded-xl shadow-[0_20px_50px_rgba(0,37,75,0.15)] border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                                  {/* Search Area */}
+                                  <div className="p-3 border-b border-slate-50 flex items-center gap-2 bg-slate-50/50">
+                                    <Search className="w-4 h-4 text-slate-400" />
+                                    <input
+                                      type="text"
+                                      autoFocus
+                                      placeholder="Buscar setor..."
+                                      value={searchTermSetor}
+                                      onChange={(e) => setSearchTermSetor(e.target.value)}
+                                      className="w-full bg-transparent border-none focus:ring-0 text-sm text-[#00254b] outline-none"
+                                    />
+                                    {searchTermSetor && (
+                                      <button onClick={() => setSearchTermSetor('')} className="p-1 hover:bg-slate-200 rounded-full transition-colors">
+                                        <X className="w-3 h-3 text-slate-400" />
+                                      </button>
+                                    )}
+                                  </div>
+
+                                  {/* Options List */}
+                                  <div className="max-h-60 overflow-y-auto custom-scrollbar">
+                                    <button
+                                      type="button"
+                                      onClick={() => {
+                                        setIsCustomSetor(true);
+                                        setIsDropdownSetorOpen(false);
+                                        setFormData(prev => ({ ...prev, setorDestino: '' }));
+                                      }}
+                                      className="w-full text-left px-4 py-3 text-sm font-bold text-[#00254b] hover:bg-blue-50 transition-colors flex items-center gap-2 border-b border-slate-50"
+                                    >
+                                      <span className="text-lg">✎</span> Digitar setor personalizado...
+                                    </button>
+                                    
+                                    {filteredSetores.length > 0 ? (
+                                      filteredSetores.map((setor) => (
+                                        <button
+                                          key={setor}
+                                          type="button"
+                                          onClick={() => {
+                                            setFormData(prev => ({ ...prev, setorDestino: setor }));
+                                            setIsDropdownSetorOpen(false);
+                                            setSearchTermSetor('');
+                                          }}
+                                          className={`w-full text-left px-4 py-3 text-sm transition-colors flex items-center gap-2 ${
+                                            formData.setorDestino === setor 
+                                              ? 'bg-blue-50 text-[#00254b] font-bold' 
+                                              : 'text-slate-600 hover:bg-slate-50'
+                                          }`}
+                                        >
+                                          {setor}
+                                        </button>
+                                      ))
+                                    ) : (
+                                      <div className="px-4 py-8 text-center text-slate-400 text-xs">
+                                        Nenhum setor encontrado para "{searchTermSetor}"
+                                      </div>
+                                    )}
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        ) : (
+                          <div className="relative">
+                            <input 
+                              name="setorDestino"
+                              value={formData.setorDestino}
+                              onChange={handleChange}
+                              placeholder="Digite o setor livremente..."
+                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none" 
+                              type="text" 
+                              autoFocus
+                            />
+                            <button 
+                              onClick={() => {
+                                setIsCustomSetor(false);
+                                setFormData(prev => ({ ...prev, setorDestino: '' }));
+                              }}
+                              className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] uppercase font-bold text-slate-400 hover:text-[#00254b] transition-colors p-2 bg-white/80 rounded-md shadow-sm"
+                              title="Voltar para lista"
+                            >
+                              Voltar
+                            </button>
+                          </div>
+                        )}
+                      </div>
                       </div>
                     </div>
                   </section>
