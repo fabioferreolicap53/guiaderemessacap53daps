@@ -641,11 +641,18 @@ export default function App() {
             </>
           ) : (
             <div className="space-y-6">
-              <div className="mb-6 sm:mb-10">
-                <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tighter mb-2">Histórico de Impressões</h1>
-                <p className="text-slate-500 text-sm">
-                  Visualize as guias que já foram impressas nesta sessão.
-                </p>
+              <div className="mb-6 sm:mb-10 flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+                <div>
+                  <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tighter mb-2">Histórico de Impressões</h1>
+                  <p className="text-slate-500 text-sm">
+                    Visualize as guias que já foram impressas nesta sessão.
+                  </p>
+                </div>
+                {historico.length > 0 && (
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider bg-slate-100 px-3 py-1 rounded-full">
+                    Exibindo os últimos 20 registros
+                  </span>
+                )}
               </div>
 
               {historico.length === 0 ? (
@@ -668,7 +675,7 @@ export default function App() {
                         </tr>
                       </thead>
                       <tbody>
-                        {historico.map((guia) => (
+                        {historico.slice(0, 20).map((guia) => (
                           <tr key={guia.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
                             <td className="py-3 px-4 sm:py-4 sm:px-6 text-xs sm:text-sm text-slate-700 font-medium whitespace-nowrap">
                               {new Date(guia.dataImpressao).toLocaleString('pt-BR')}
