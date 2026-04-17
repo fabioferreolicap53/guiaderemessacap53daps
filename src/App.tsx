@@ -148,7 +148,7 @@ export default function App() {
   );
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] font-sans text-slate-900 flex flex-col print:bg-white">
+    <div className="min-h-screen bg-[#f1f3f5] font-sans text-slate-900 flex flex-col print:bg-white">
       <style>
         {`
           @media print {
@@ -165,31 +165,31 @@ export default function App() {
               overflow: hidden;
             }
             .custom-scrollbar::-webkit-scrollbar {
-              width: 6px;
+              width: 8px;
             }
             .custom-scrollbar::-webkit-scrollbar-track {
-              background: transparent;
+              background: #f1f5f9;
             }
             .custom-scrollbar::-webkit-scrollbar-thumb {
-              background: #e2e8f0;
+              background: #94a3b8;
               border-radius: 10px;
             }
             .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-              background: #cbd5e1;
+              background: #64748b;
             }
           }
           .custom-scrollbar::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
           }
           .custom-scrollbar::-webkit-scrollbar-track {
-            background: transparent;
+            background: #f1f5f9;
           }
           .custom-scrollbar::-webkit-scrollbar-thumb {
-            background: #e2e8f0;
+            background: #94a3b8;
             border-radius: 10px;
           }
           .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-            background: #cbd5e1;
+            background: #64748b;
           }
         `}
       </style>
@@ -201,16 +201,16 @@ export default function App() {
         <nav className="flex items-center gap-4 sm:gap-6 w-full sm:w-auto justify-center sm:justify-end overflow-x-auto">
           <button 
             onClick={() => setActiveTab('nova')}
-            className={`flex items-center gap-2 text-sm font-bold transition-colors ${activeTab === 'nova' ? 'text-white border-b-2 border-white pb-1' : 'text-blue-200 hover:text-white pb-1 border-b-2 border-transparent'}`}
+            className={`flex items-center gap-2 text-base font-black transition-colors whitespace-nowrap ${activeTab === 'nova' ? 'text-white border-b-4 border-white pb-1' : 'text-blue-200 hover:text-white pb-1 border-b-4 border-transparent'}`}
           >
-            <FileEdit className="w-4 h-4" />
+            <FileEdit className="w-5 h-5" />
             Nova Guia
           </button>
           <button 
             onClick={() => setActiveTab('historico')}
-            className={`flex items-center gap-2 text-sm font-bold transition-colors ${activeTab === 'historico' ? 'text-white border-b-2 border-white pb-1' : 'text-blue-200 hover:text-white pb-1 border-b-2 border-transparent'}`}
+            className={`flex items-center gap-2 text-base font-black transition-colors whitespace-nowrap ${activeTab === 'historico' ? 'text-white border-b-4 border-white pb-1' : 'text-blue-200 hover:text-white pb-1 border-b-4 border-transparent'}`}
           >
-            <History className="w-4 h-4" />
+            <History className="w-5 h-5" />
             Histórico
           </button>
         </nav>
@@ -233,22 +233,22 @@ export default function App() {
                 {/* Main Form Section */}
                 <div className="lg:col-span-8 space-y-6 sm:space-y-8">
                   {/* Logística */}
-                  <section className="bg-white p-5 sm:p-8 rounded-xl shadow-sm border border-slate-100">
-                    <h3 className="uppercase tracking-widest text-[10px] font-bold text-slate-500 mb-6">Logística de Origem e Destino</h3>
+                  <section className="bg-white p-5 sm:p-8 rounded-xl shadow-md border border-slate-200">
+                    <h3 className="uppercase tracking-widest text-xs font-black text-slate-900 mb-6">Logística de Origem e Destino</h3>
                     <div className="grid grid-cols-1 gap-6">
                       <div className="relative">
-                        <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">De (Origem)</label>
+                        <label className="block uppercase tracking-[0.05ch] text-xs font-black text-slate-800 mb-2">De (Origem)</label>
                         {!isCustomOrigem ? (
                           <div className="relative">
                             <button
                               type="button"
                               onClick={() => setIsDropdownOrigemOpen(!isDropdownOrigemOpen)}
-                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none flex items-center justify-between group hover:bg-slate-200/50"
+                              className="w-full bg-white border-2 border-slate-200 focus:border-[#00254b] text-lg font-bold text-slate-900 py-3 px-4 rounded-md transition-all outline-none flex items-center justify-between group hover:border-slate-400 shadow-sm"
                             >
-                              <span className={formData.origem ? 'text-[#00254b]' : 'text-slate-400'}>
+                              <span className={formData.origem ? 'text-slate-900' : 'text-slate-400'}>
                                 {formData.origem || "Selecione uma origem..."}
                               </span>
-                              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${isDropdownOrigemOpen ? 'rotate-180' : ''}`} />
+                              <ChevronDown className={`w-5 h-5 text-slate-600 transition-transform duration-300 ${isDropdownOrigemOpen ? 'rotate-180' : ''}`} />
                             </button>
 
                             {isDropdownOrigemOpen && (
@@ -257,27 +257,27 @@ export default function App() {
                                   className="fixed inset-0 z-50" 
                                   onClick={() => setIsDropdownOrigemOpen(false)}
                                 />
-                                <div className="absolute z-[60] left-0 right-0 mt-2 bg-white rounded-xl shadow-[0_20px_50px_rgba(0,37,75,0.15)] border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                                <div className="absolute z-[60] left-0 right-0 mt-2 bg-white rounded-xl shadow-[0_25px_60px_rgba(0,0,0,0.2)] border-2 border-slate-200 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                                   {/* Search Area */}
-                                  <div className="p-3 border-b border-slate-50 flex items-center gap-2 bg-slate-50/50">
-                                    <Search className="w-4 h-4 text-slate-400" />
+                                  <div className="p-4 border-b-2 border-slate-100 flex items-center gap-3 bg-slate-50">
+                                    <Search className="w-5 h-5 text-slate-700" />
                                     <input
                                       type="text"
                                       autoFocus
                                       placeholder="Buscar origem..."
                                       value={searchTermOrigem}
                                       onChange={(e) => setSearchTermOrigem(e.target.value)}
-                                      className="w-full bg-transparent border-none focus:ring-0 text-sm text-[#00254b] outline-none"
+                                      className="w-full bg-transparent border-none focus:ring-0 text-base font-bold text-slate-900 outline-none"
                                     />
                                     {searchTermOrigem && (
                                       <button onClick={() => setSearchTermOrigem('')} className="p-1 hover:bg-slate-200 rounded-full transition-colors">
-                                        <X className="w-3 h-3 text-slate-400" />
+                                        <X className="w-4 h-4 text-slate-600" />
                                       </button>
                                     )}
                                   </div>
 
                                   {/* Options List */}
-                                  <div className="max-h-60 overflow-y-auto custom-scrollbar">
+                                  <div className="max-h-72 overflow-y-auto custom-scrollbar">
                                     <button
                                       type="button"
                                       onClick={() => {
@@ -285,9 +285,9 @@ export default function App() {
                                         setIsDropdownOrigemOpen(false);
                                         setFormData(prev => ({ ...prev, origem: '' }));
                                       }}
-                                      className="w-full text-left px-4 py-3 text-sm font-bold text-[#00254b] hover:bg-blue-50 transition-colors flex items-center gap-2 border-b border-slate-50"
+                                      className="w-full text-left px-5 py-4 text-base font-black text-[#1c2e4a] hover:bg-blue-50 transition-colors flex items-center gap-2 border-b-2 border-slate-100"
                                     >
-                                      <span className="text-lg">✎</span> Digitar origem personalizada...
+                                      <span className="text-xl">✎</span> Digitar origem personalizada...
                                     </button>
                                     
                                     {filteredOrigens.length > 0 ? (
@@ -300,17 +300,17 @@ export default function App() {
                                             setIsDropdownOrigemOpen(false);
                                             setSearchTermOrigem('');
                                           }}
-                                          className={`w-full text-left px-4 py-3 text-sm transition-colors flex items-center gap-2 ${
+                                          className={`w-full text-left px-5 py-4 text-base font-bold transition-colors flex items-center gap-2 border-b border-slate-50 last:border-0 ${
                                             formData.origem === origem 
-                                              ? 'bg-blue-50 text-[#00254b] font-bold' 
-                                              : 'text-slate-600 hover:bg-slate-50'
+                                              ? 'bg-blue-100 text-[#00254b] font-black' 
+                                              : 'text-slate-800 hover:bg-slate-50'
                                           }`}
                                         >
                                           {origem}
                                         </button>
                                       ))
                                     ) : (
-                                      <div className="px-4 py-8 text-center text-slate-400 text-xs">
+                                      <div className="px-4 py-10 text-center text-slate-600 font-bold text-sm">
                                         Nenhuma origem encontrada para "{searchTermOrigem}"
                                       </div>
                                     )}
@@ -326,7 +326,7 @@ export default function App() {
                               value={formData.origem}
                               onChange={handleChange}
                               placeholder="Digite a origem livremente..."
-                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none" 
+                              className="w-full bg-white border-2 border-slate-200 focus:border-[#00254b] text-lg font-bold text-slate-900 py-3 px-4 rounded-md transition-all outline-none shadow-sm" 
                               type="text" 
                               autoFocus
                             />
@@ -335,7 +335,7 @@ export default function App() {
                                 setIsCustomOrigem(false);
                                 setFormData(prev => ({ ...prev, origem: '' }));
                               }}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] uppercase font-bold text-slate-400 hover:text-[#00254b] transition-colors p-2 bg-white/80 rounded-md shadow-sm"
+                              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-black text-slate-700 hover:text-[#00254b] transition-colors p-2 bg-slate-100 rounded-md shadow-sm border border-slate-200"
                               title="Voltar para lista"
                             >
                               Voltar
@@ -345,18 +345,18 @@ export default function App() {
                       </div>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="relative">
-                        <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">Para (Destino)</label>
+                        <label className="block uppercase tracking-[0.05ch] text-xs font-black text-slate-800 mb-2">Para (Destino)</label>
                         {!isCustomDestino ? (
                           <div className="relative">
                             <button
                               type="button"
                               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none flex items-center justify-between group hover:bg-slate-200/50"
+                              className="w-full bg-white border-2 border-slate-200 focus:border-[#00254b] text-lg font-bold text-slate-900 py-3 px-4 rounded-md transition-all outline-none flex items-center justify-between group hover:border-slate-400 shadow-sm"
                             >
-                              <span className={formData.destino ? 'text-[#00254b]' : 'text-slate-400'}>
+                              <span className={formData.destino ? 'text-slate-900' : 'text-slate-400'}>
                                 {formData.destino || "Selecione um destino..."}
                               </span>
-                              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                              <ChevronDown className={`w-5 h-5 text-slate-600 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180' : ''}`} />
                             </button>
 
                             {isDropdownOpen && (
@@ -365,27 +365,27 @@ export default function App() {
                                   className="fixed inset-0 z-50" 
                                   onClick={() => setIsDropdownOpen(false)}
                                 />
-                                <div className="absolute z-[60] left-0 right-0 mt-2 bg-white rounded-xl shadow-[0_20px_50px_rgba(0,37,75,0.15)] border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                                <div className="absolute z-[60] left-0 right-0 mt-2 bg-white rounded-xl shadow-[0_25px_60px_rgba(0,0,0,0.2)] border-2 border-slate-200 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                                   {/* Search Area */}
-                                  <div className="p-3 border-b border-slate-50 flex items-center gap-2 bg-slate-50/50">
-                                    <Search className="w-4 h-4 text-slate-400" />
+                                  <div className="p-4 border-b-2 border-slate-100 flex items-center gap-3 bg-slate-50">
+                                    <Search className="w-5 h-5 text-slate-700" />
                                     <input
                                       type="text"
                                       autoFocus
                                       placeholder="Buscar destino..."
                                       value={searchTerm}
                                       onChange={(e) => setSearchTerm(e.target.value)}
-                                      className="w-full bg-transparent border-none focus:ring-0 text-sm text-[#00254b] outline-none"
+                                      className="w-full bg-transparent border-none focus:ring-0 text-base font-bold text-slate-900 outline-none"
                                     />
                                     {searchTerm && (
                                       <button onClick={() => setSearchTerm('')} className="p-1 hover:bg-slate-200 rounded-full transition-colors">
-                                        <X className="w-3 h-3 text-slate-400" />
+                                        <X className="w-4 h-4 text-slate-600" />
                                       </button>
                                     )}
                                   </div>
 
                                   {/* Options List */}
-                                  <div className="max-h-60 overflow-y-auto custom-scrollbar">
+                                  <div className="max-h-72 overflow-y-auto custom-scrollbar">
                                     <button
                                       type="button"
                                       onClick={() => {
@@ -393,9 +393,9 @@ export default function App() {
                                         setIsDropdownOpen(false);
                                         setFormData(prev => ({ ...prev, destino: '' }));
                                       }}
-                                      className="w-full text-left px-4 py-3 text-sm font-bold text-[#00254b] hover:bg-blue-50 transition-colors flex items-center gap-2 border-b border-slate-50"
+                                      className="w-full text-left px-5 py-4 text-base font-black text-[#1c2e4a] hover:bg-blue-50 transition-colors flex items-center gap-2 border-b-2 border-slate-100"
                                     >
-                                      <span className="text-lg">✎</span> Digitar destino personalizado...
+                                      <span className="text-xl">✎</span> Digitar destino personalizado...
                                     </button>
                                     
                                     {filteredDestinos.length > 0 ? (
@@ -408,17 +408,17 @@ export default function App() {
                                             setIsDropdownOpen(false);
                                             setSearchTerm('');
                                           }}
-                                          className={`w-full text-left px-4 py-3 text-sm transition-colors flex items-center gap-2 ${
+                                          className={`w-full text-left px-5 py-4 text-base font-bold transition-colors flex items-center gap-2 border-b border-slate-50 last:border-0 ${
                                             formData.destino === destino 
-                                              ? 'bg-blue-50 text-[#00254b] font-bold' 
-                                              : 'text-slate-600 hover:bg-slate-50'
+                                              ? 'bg-blue-100 text-[#00254b] font-black' 
+                                              : 'text-slate-800 hover:bg-slate-50'
                                           }`}
                                         >
                                           {destino}
                                         </button>
                                       ))
                                     ) : (
-                                      <div className="px-4 py-8 text-center text-slate-400 text-xs">
+                                      <div className="px-4 py-10 text-center text-slate-600 font-bold text-sm">
                                         Nenhum destino encontrado para "{searchTerm}"
                                       </div>
                                     )}
@@ -434,7 +434,7 @@ export default function App() {
                               value={formData.destino}
                               onChange={handleChange}
                               placeholder="Digite o destino livremente..."
-                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none" 
+                              className="w-full bg-white border-2 border-slate-200 focus:border-[#00254b] text-lg font-bold text-slate-900 py-3 px-4 rounded-md transition-all outline-none shadow-sm" 
                               type="text" 
                               autoFocus
                             />
@@ -443,7 +443,7 @@ export default function App() {
                                 setIsCustomDestino(false);
                                 setFormData(prev => ({ ...prev, destino: '' }));
                               }}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] uppercase font-bold text-slate-400 hover:text-[#00254b] transition-colors p-2 bg-white/80 rounded-md shadow-sm"
+                              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-black text-slate-700 hover:text-[#00254b] transition-colors p-2 bg-slate-100 rounded-md shadow-sm border border-slate-200"
                               title="Voltar para lista"
                             >
                               Voltar
@@ -452,18 +452,18 @@ export default function App() {
                         )}
                       </div>
                       <div className="relative">
-                        <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">Setor do Destino</label>
+                        <label className="block uppercase tracking-[0.05ch] text-xs font-black text-slate-800 mb-2">Setor do Destino</label>
                         {!isCustomSetor ? (
                           <div className="relative">
                             <button
                               type="button"
                               onClick={() => setIsDropdownSetorOpen(!isDropdownSetorOpen)}
-                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none flex items-center justify-between group hover:bg-slate-200/50"
+                              className="w-full bg-white border-2 border-slate-200 focus:border-[#00254b] text-lg font-bold text-slate-900 py-3 px-4 rounded-md transition-all outline-none flex items-center justify-between group hover:border-slate-400 shadow-sm"
                             >
-                              <span className={formData.setorDestino ? 'text-[#00254b]' : 'text-slate-400'}>
+                              <span className={formData.setorDestino ? 'text-slate-900' : 'text-slate-400'}>
                                 {formData.setorDestino || "Selecione um setor..."}
                               </span>
-                              <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-300 ${isDropdownSetorOpen ? 'rotate-180' : ''}`} />
+                              <ChevronDown className="w-5 h-5 text-slate-600 transition-transform duration-300" />
                             </button>
 
                             {isDropdownSetorOpen && (
@@ -472,27 +472,27 @@ export default function App() {
                                   className="fixed inset-0 z-50" 
                                   onClick={() => setIsDropdownSetorOpen(false)}
                                 />
-                                <div className="absolute z-[60] left-0 right-0 mt-2 bg-white rounded-xl shadow-[0_20px_50px_rgba(0,37,75,0.15)] border border-slate-100 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
+                                <div className="absolute z-[60] left-0 right-0 mt-2 bg-white rounded-xl shadow-[0_25px_60px_rgba(0,0,0,0.2)] border-2 border-slate-200 overflow-hidden animate-in fade-in slide-in-from-top-2 duration-200">
                                   {/* Search Area */}
-                                  <div className="p-3 border-b border-slate-50 flex items-center gap-2 bg-slate-50/50">
-                                    <Search className="w-4 h-4 text-slate-400" />
+                                  <div className="p-4 border-b-2 border-slate-100 flex items-center gap-3 bg-slate-50">
+                                    <Search className="w-5 h-5 text-slate-700" />
                                     <input
                                       type="text"
                                       autoFocus
                                       placeholder="Buscar setor..."
                                       value={searchTermSetor}
                                       onChange={(e) => setSearchTermSetor(e.target.value)}
-                                      className="w-full bg-transparent border-none focus:ring-0 text-sm text-[#00254b] outline-none"
+                                      className="w-full bg-transparent border-none focus:ring-0 text-base font-bold text-slate-900 outline-none"
                                     />
                                     {searchTermSetor && (
                                       <button onClick={() => setSearchTermSetor('')} className="p-1 hover:bg-slate-200 rounded-full transition-colors">
-                                        <X className="w-3 h-3 text-slate-400" />
+                                        <X className="w-4 h-4 text-slate-600" />
                                       </button>
                                     )}
                                   </div>
 
                                   {/* Options List */}
-                                  <div className="max-h-60 overflow-y-auto custom-scrollbar">
+                                  <div className="max-h-72 overflow-y-auto custom-scrollbar">
                                     <button
                                       type="button"
                                       onClick={() => {
@@ -500,9 +500,9 @@ export default function App() {
                                         setIsDropdownSetorOpen(false);
                                         setFormData(prev => ({ ...prev, setorDestino: '' }));
                                       }}
-                                      className="w-full text-left px-4 py-3 text-sm font-bold text-[#00254b] hover:bg-blue-50 transition-colors flex items-center gap-2 border-b border-slate-50"
+                                      className="w-full text-left px-5 py-4 text-base font-black text-[#1c2e4a] hover:bg-blue-50 transition-colors flex items-center gap-2 border-b-2 border-slate-100"
                                     >
-                                      <span className="text-lg">✎</span> Digitar setor personalizado...
+                                      <span className="text-xl">✎</span> Digitar setor personalizado...
                                     </button>
                                     
                                     {filteredSetores.length > 0 ? (
@@ -515,17 +515,17 @@ export default function App() {
                                             setIsDropdownSetorOpen(false);
                                             setSearchTermSetor('');
                                           }}
-                                          className={`w-full text-left px-4 py-3 text-sm transition-colors flex items-center gap-2 ${
+                                          className={`w-full text-left px-5 py-4 text-base font-bold transition-colors flex items-center gap-2 border-b border-slate-50 last:border-0 ${
                                             formData.setorDestino === setor 
-                                              ? 'bg-blue-50 text-[#00254b] font-bold' 
-                                              : 'text-slate-600 hover:bg-slate-50'
+                                              ? 'bg-blue-100 text-[#00254b] font-black' 
+                                              : 'text-slate-800 hover:bg-slate-50'
                                           }`}
                                         >
                                           {setor}
                                         </button>
                                       ))
                                     ) : (
-                                      <div className="px-4 py-8 text-center text-slate-400 text-xs">
+                                      <div className="px-4 py-10 text-center text-slate-600 font-bold text-sm">
                                         Nenhum setor encontrado para "{searchTermSetor}"
                                       </div>
                                     )}
@@ -541,7 +541,7 @@ export default function App() {
                               value={formData.setorDestino}
                               onChange={handleChange}
                               placeholder="Digite o setor livremente..."
-                              className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none" 
+                              className="w-full bg-white border-2 border-slate-200 focus:border-[#00254b] text-lg font-bold text-slate-900 py-3 px-4 rounded-md transition-all outline-none shadow-sm" 
                               type="text" 
                               autoFocus
                             />
@@ -550,7 +550,7 @@ export default function App() {
                                 setIsCustomSetor(false);
                                 setFormData(prev => ({ ...prev, setorDestino: '' }));
                               }}
-                              className="absolute right-2 top-1/2 -translate-y-1/2 text-[10px] uppercase font-bold text-slate-400 hover:text-[#00254b] transition-colors p-2 bg-white/80 rounded-md shadow-sm"
+                              className="absolute right-2 top-1/2 -translate-y-1/2 text-xs font-black text-slate-700 hover:text-[#00254b] transition-colors p-2 bg-slate-100 rounded-md shadow-sm border border-slate-200"
                               title="Voltar para lista"
                             >
                               Voltar
@@ -558,31 +558,31 @@ export default function App() {
                           </div>
                         )}
                       </div>
-                      </div>
                     </div>
-                  </section>
+                  </div>
+                </section>
 
                   {/* Conteúdo */}
-                  <section className="bg-white p-5 sm:p-8 rounded-xl shadow-sm border border-slate-100">
-                    <h3 className="uppercase tracking-widest text-[10px] font-bold text-slate-500 mb-6">Conteúdo da Remessa</h3>
+                  <section className="bg-white p-5 sm:p-8 rounded-xl shadow-md border border-slate-200">
+                    <h3 className="uppercase tracking-widest text-xs font-black text-slate-900 mb-6">Conteúdo da Remessa</h3>
                     <div className="space-y-6">
                       <div>
-                        <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">Aos Cuidados de</label>
+                        <label className="block uppercase tracking-[0.05ch] text-xs font-black text-slate-800 mb-2">Aos Cuidados de</label>
                         <input 
                           name="cuidadosDe"
                           value={formData.cuidadosDe}
                           onChange={handleChange}
-                          className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none" 
+                          className="w-full bg-white border-2 border-slate-200 focus:border-[#00254b] text-lg font-bold text-slate-900 py-3 px-4 rounded-md transition-all outline-none shadow-sm" 
                           type="text" 
                         />
                       </div>
                       <div>
-                        <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">Item(ns) Remetido(s)</label>
+                        <label className="block uppercase tracking-[0.05ch] text-xs font-black text-slate-800 mb-2">Item(ns) Remetido(s)</label>
                         <textarea 
                           name="itens"
                           value={formData.itens}
                           onChange={handleChange}
-                          className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all resize-none outline-none" 
+                          className="w-full bg-white border-2 border-slate-200 focus:border-[#00254b] text-lg font-bold text-slate-900 py-3 px-4 rounded-md transition-all resize-none outline-none shadow-sm" 
                           rows={3}
                         />
                       </div>
@@ -593,23 +593,23 @@ export default function App() {
                 {/* Right Column */}
                 <div className="lg:col-span-4 space-y-6 sm:space-y-8 lg:sticky lg:top-24 print:hidden">
                   {/* Responsabilidade */}
-                  <section className="bg-white p-5 sm:p-8 rounded-xl shadow-sm border border-slate-100">
-                    <h3 className="uppercase tracking-widest text-[10px] font-bold text-slate-500 mb-6 text-center">RESPONSABILIDADE PELO ENVIO</h3>
+                  <section className="bg-white p-5 sm:p-8 rounded-xl shadow-md border border-slate-200 text-center">
+                    <h3 className="uppercase tracking-widest text-xs font-black text-slate-900 mb-6">RESPONSABILIDADE PELO ENVIO</h3>
                     <div className="space-y-6">
                       <div>
-                        <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">Nome do Responsável</label>
+                        <label className="block uppercase tracking-[0.05ch] text-xs font-black text-slate-800 mb-2">Nome do Responsável</label>
                         <input 
                           name="responsavel"
                           value={formData.responsavel}
                           onChange={handleChange}
-                          className="w-full bg-slate-100 border-none focus:bg-slate-50 focus:ring-0 focus:border-b-2 focus:border-[#00254b] text-base text-[#00254b] py-3 px-4 rounded-md transition-all outline-none" 
+                          className="w-full bg-white border-2 border-slate-200 focus:border-[#00254b] text-lg font-bold text-slate-900 py-3 px-4 rounded-md transition-all outline-none shadow-sm text-center" 
                           type="text" 
                         />
                       </div>
                       <div className="flex flex-col items-center">
-                        <label className="block uppercase tracking-[0.05ch] text-[10px] font-semibold text-slate-500 mb-2">Status da Guia</label>
-                        <div className="inline-flex items-center px-3 py-1 bg-[#00433b] text-white rounded-full text-xs font-bold">
-                          <span className="w-2 h-2 bg-[#57b4a4] rounded-full mr-2"></span>
+                        <label className="block uppercase tracking-[0.05ch] text-xs font-black text-slate-800 mb-2">Status da Guia</label>
+                        <div className="inline-flex items-center px-4 py-2 bg-[#00433b] text-white rounded-full text-sm font-black shadow-md">
+                          <span className="w-3 h-3 bg-[#57b4a4] rounded-full mr-3 animate-pulse"></span>
                           Pronta para Impressão
                         </div>
                       </div>
@@ -617,24 +617,24 @@ export default function App() {
                   </section>
 
                   {/* Actions */}
-                  <div className="bg-white p-5 sm:p-8 rounded-xl shadow-sm border border-slate-100 print:hidden">
+                  <div className="bg-white p-5 sm:p-8 rounded-xl shadow-md border border-slate-200 print:hidden">
                     <div className="flex flex-col gap-4">
                       <button 
                         onClick={handlePrint}
-                        className="w-full py-4 bg-[#1c2e4a] text-white font-bold text-base rounded-md hover:opacity-90 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+                        className="w-full py-4 bg-[#1c2e4a] text-white font-black text-lg rounded-md hover:opacity-95 active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-lg"
                       >
-                        <Printer className="w-5 h-5" />
+                        <Printer className="w-6 h-6" />
                         Visualizar para Imprimir
                       </button>
                       <button 
                         onClick={handleClear}
-                        className="w-full py-4 bg-transparent text-slate-700 font-semibold text-base rounded-md border border-slate-300 hover:bg-slate-50 active:scale-[0.98] transition-all flex items-center justify-center gap-3"
+                        className="w-full py-4 bg-white text-slate-900 font-black text-lg rounded-md border-2 border-slate-300 hover:bg-slate-50 active:scale-[0.98] transition-all flex items-center justify-center gap-3 shadow-sm"
                       >
-                        <Trash2 className="w-5 h-5" />
+                        <Trash2 className="w-6 h-6" />
                         Limpar
                       </button>
                     </div>
-                    <p className="text-[10px] text-center mt-6 text-slate-400 font-medium uppercase tracking-wider">Última edição há 2 minutos</p>
+                    <p className="text-xs text-center mt-6 text-slate-500 font-black uppercase tracking-wider">Última edição há 2 minutos</p>
                   </div>
                 </div>
               </div>
@@ -666,24 +666,24 @@ export default function App() {
                   <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse min-w-[600px]">
                       <thead>
-                        <tr className="bg-slate-50 border-b border-slate-100">
-                          <th className="py-3 px-4 sm:py-4 sm:px-6 uppercase tracking-widest text-[10px] font-bold text-slate-500">Data/Hora</th>
-                          <th className="py-3 px-4 sm:py-4 sm:px-6 uppercase tracking-widest text-[10px] font-bold text-slate-500">Destino</th>
-                          <th className="py-3 px-4 sm:py-4 sm:px-6 uppercase tracking-widest text-[10px] font-bold text-slate-500">Setor</th>
-                          <th className="py-3 px-4 sm:py-4 sm:px-6 uppercase tracking-widest text-[10px] font-bold text-slate-500">Responsável</th>
-                          <th className="py-3 px-4 sm:py-4 sm:px-6 uppercase tracking-widest text-[10px] font-bold text-slate-500 text-center">Ações</th>
+                        <tr className="bg-slate-100 border-b-2 border-slate-200">
+                          <th className="py-4 px-6 uppercase tracking-widest text-xs font-black text-slate-900">Data/Hora</th>
+                          <th className="py-4 px-6 uppercase tracking-widest text-xs font-black text-slate-900">Destino</th>
+                          <th className="py-4 px-6 uppercase tracking-widest text-xs font-black text-slate-900">Setor</th>
+                          <th className="py-4 px-6 uppercase tracking-widest text-xs font-black text-slate-900">Responsável</th>
+                          <th className="py-4 px-6 uppercase tracking-widest text-xs font-black text-slate-900 text-center">Ações</th>
                         </tr>
                       </thead>
                       <tbody>
                         {historico.slice(0, 20).map((guia) => (
-                          <tr key={guia.id} className="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                            <td className="py-3 px-4 sm:py-4 sm:px-6 text-xs sm:text-sm text-slate-700 font-medium whitespace-nowrap">
+                          <tr key={guia.id} className="border-b border-slate-200 hover:bg-slate-50 transition-colors">
+                            <td className="py-4 px-6 text-sm text-slate-900 font-bold whitespace-nowrap">
                               {new Date(guia.dataImpressao).toLocaleString('pt-BR')}
                             </td>
-                            <td className="py-3 px-4 sm:py-4 sm:px-6 text-xs sm:text-sm text-slate-900 font-bold">{guia.destino}</td>
-                            <td className="py-3 px-4 sm:py-4 sm:px-6 text-xs sm:text-sm text-slate-600">{guia.setorDestino}</td>
-                            <td className="py-3 px-4 sm:py-4 sm:px-6 text-xs sm:text-sm text-slate-600">{guia.responsavel}</td>
-                            <td className="py-3 px-4 sm:py-4 sm:px-6 flex justify-center gap-2">
+                            <td className="py-4 px-6 text-sm text-slate-900 font-black">{guia.destino}</td>
+                            <td className="py-4 px-6 text-sm text-slate-800 font-bold">{guia.setorDestino}</td>
+                            <td className="py-4 px-6 text-sm text-slate-800 font-bold">{guia.responsavel}</td>
+                            <td className="py-4 px-6 flex justify-center gap-3">
                               <button 
                                 onClick={() => {
                                   setFormData({
@@ -696,17 +696,17 @@ export default function App() {
                                   });
                                   setActiveTab('nova');
                                 }}
-                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors"
+                                className="p-2.5 text-blue-700 hover:bg-blue-100 rounded-md transition-colors border border-blue-200"
                                 title="Preencher formulário com estes dados"
                               >
-                                <FileEdit className="w-4 h-4" />
+                                <FileEdit className="w-5 h-5" />
                               </button>
                               <button 
                                 onClick={() => handleDeleteHistorico(guia.id)}
-                                className="p-2 text-red-500 hover:bg-red-50 rounded-md transition-colors"
+                                className="p-2.5 text-red-600 hover:bg-red-100 rounded-md transition-colors border border-red-200"
                                 title="Excluir este registro"
                               >
-                                <Trash2 className="w-4 h-4" />
+                                <Trash2 className="w-5 h-5" />
                               </button>
                             </td>
                           </tr>
