@@ -81,7 +81,15 @@ const LISTA_SETORES = [
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'nova' | 'historico'>('nova');
-  const [historico, setHistorico] = useState<GuiaData[]>([]);
+  const [historico, setHistorico] = useState<GuiaData[]>(() => {
+    const saved = localStorage.getItem('guiaderemessa_historico');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Persistir histórico sempre que houver mudanças
+  React.useEffect(() => {
+    localStorage.setItem('guiaderemessa_historico', JSON.stringify(historico.slice(0, 20)));
+  }, [historico]);
   const [isCustomDestino, setIsCustomDestino] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isCustomOrigem, setIsCustomOrigem] = useState(false);
@@ -125,7 +133,7 @@ export default function App() {
       dataImpressao: new Date().toISOString(),
       ...formData
     };
-    setHistorico(prev => [novaGuia, ...prev]);
+    setHistorico(prev => [novaGuia, ...prev].slice(0, 20));
     window.print();
   };
 
